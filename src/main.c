@@ -20,7 +20,7 @@ int main () {
         }
     }
     
-    for (int i = 0; i < lin; i++) {
+    /*for (int i = 0; i < lin; i++) {
         for (int j = 0; j < col; j++) {
             printf("%d", visited[i][j]);
         }
@@ -33,7 +33,7 @@ int main () {
             printf("%d", matrix[i][j]);
         }
         printf("\n");
-    }
+    }*/
 
     tuple_t pos_ini = find_initial_position(matrix, lin, col);
     printf("%d %d\n", pos_ini.x, pos_ini.y);
