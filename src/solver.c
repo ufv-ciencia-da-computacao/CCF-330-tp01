@@ -1,7 +1,7 @@
 #include "solver.h"
 
 int move_student_util(tuple_t pos, int ***visited, int **matrix, int keys, int max_lin, int max_col, int iter, int *fim, int *mov, int *recursive, int *maxLevel) {
-    
+
     //Counting recursive calls
     (*recursive)++;
 
@@ -10,9 +10,6 @@ int move_student_util(tuple_t pos, int ***visited, int **matrix, int keys, int m
 
     //Saving max level of recursive calls
     if(iter > *maxLevel) *maxLevel = iter;
-
-    //Print sugerido, porém pode levar uma eternidade
-    //printf("Linha %d Coluna %d\n", pos.x, pos.y);
     
     //Reach goal
     if (pos.x == 0 && (matrix[pos.x][pos.y] == 1 || matrix[pos.x][pos.y] == 3 && keys > 0)) {
@@ -29,13 +26,16 @@ int move_student_util(tuple_t pos, int ***visited, int **matrix, int keys, int m
         keys--;
     }
 
+    //Print sugerido, porém pode levar uma eternidade
+    //printf("Linha %d Coluna %d\n", pos.x, pos.y);
+
+    //Counting movements
+    (*mov)++;
+
     //Already visited (return)
     if((*visited)[pos.x][pos.y] != 0) {
         return 0;
     }
-
-    //Counting movements !! Maybe the place is wrong !!
-    (*mov)++;
 
     //Marking visited place
     (*visited)[pos.x][pos.y] = iter;
@@ -48,7 +48,7 @@ int move_student_util(tuple_t pos, int ***visited, int **matrix, int keys, int m
         move_student_util(new_pos, visited, matrix, keys, max_lin, max_col, iter+1, fim, mov, recursive, maxLevel);
     }
 
-    //Right
+    //Left
     if (pos.y - 1 >= 0) {
         tuple_t new_pos;
         new_pos.x = pos.x;
@@ -56,7 +56,7 @@ int move_student_util(tuple_t pos, int ***visited, int **matrix, int keys, int m
         move_student_util(new_pos, visited, matrix, keys, max_lin, max_col, iter+1, fim, mov, recursive, maxLevel);
     }
 
-    //Left
+    //Right
     if (pos.y + 1 <= max_col) {
         tuple_t new_pos;
         new_pos.x = pos.x;
@@ -74,7 +74,7 @@ int move_student_util(tuple_t pos, int ***visited, int **matrix, int keys, int m
     
     //Returning, so setting visited back to zero
     if(*fim == 0) (*visited)[pos.x][pos.y] = 0;
-    
+
 }
 
 void solve(int ***visited, int **matrix, int lin, int col, int keys, int analise) {
@@ -99,15 +99,15 @@ void solve(int ***visited, int **matrix, int lin, int col, int keys, int analise
             }
             printf("\n");
         }
-        printf("\nO estudante se movimentou %d vezes e chegou na coluna %d da primeira linha.\n\n", mov, end);
+        printf("\nO estudante se movimentou %d vezes e chegou na coluna %d da primeira linha.\n", mov, end);
     } else {
-        printf("\nO estudante se movimentou %d vezes e percebeu que o labirinto nao tem saida.\n\n", mov);
+        printf("\nO estudante se movimentou %d vezes e percebeu que o labirinto nao tem saida.\n", mov);
     }
 
     //Required Analise Mode
     if(analise) {
         printf("Total de chamadas recursivas: %d\n", recursive);
-        printf("Nivel maximo de recursividade: %d\n\n", maxLevel);
+        printf("Nivel maximo de recursividade: %d\n", maxLevel);
     }
     
     

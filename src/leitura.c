@@ -1,8 +1,14 @@
+#include <string.h>
 #include "leitura.h"
 
-void read_file(int ***matrix, int *lin, int *col, int *keys) {
+void read_file(int ***matrix, int *lin, int *col, int *keys, char *name) {
     FILE *file;
-    file = fopen("./data/input.txt", "r");
+    char path[100];
+    strcat(path, "./data/");
+    strcat(path, name);
+    strcat(path, ".txt");
+    
+    file = fopen(path, "r");
 
     if (file == NULL) {
         perror("Arquivo nao pode ser lido!");
