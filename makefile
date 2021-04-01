@@ -1,3 +1,4 @@
+DEBUG ?= 1
 all: main clear
 
 main: leitura.o solver.o menu.o main.o
@@ -14,7 +15,10 @@ menu.o: ./src/menu.c
 
 # -D ANALISE
 main.o: ./src/main.c
+ifeq ($(DEBUG),1)
 	gcc -D ANALISE -c ./src/main.c -o main.o
-
+else
+	gcc -c ./src/main.c -o main.o
+endif
 clear:
 	rm *.o

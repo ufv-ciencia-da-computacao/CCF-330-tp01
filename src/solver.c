@@ -119,7 +119,8 @@ tuple_t find_initial_position(int **matrix, int lin, int col) {
         for (int j = 0; j < col; j++) {
             if (matrix[i][j] == 0) {
                 initial_position.x = i;
-                initial_position.y = j;   
+                initial_position.y = j;
+                break;
             }
         }
     }
