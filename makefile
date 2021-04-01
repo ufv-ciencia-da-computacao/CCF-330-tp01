@@ -9,8 +9,9 @@ leitura.o: ./src/leitura.c
 solver.o: ./src/solver.c
 	gcc -c ./src/solver.c -o solver.o
 
+# -D ANALISE
 main.o: ./src/main.c
-	gcc -c ./src/main.c -o main.o
+	gcc -D ANALISE -c ./src/main.c -o main.o
 
 clear:
 	rm *.o

@@ -8,7 +8,6 @@ int main () {
     int **matrix, lin, col, keys;
     int **visited;
 
-
     read_file(&matrix, &lin, &col, &keys);
 
     visited = (int**) malloc(lin*sizeof(int*));
@@ -36,8 +35,17 @@ int main () {
     }*/
 
     tuple_t pos_ini = find_initial_position(matrix, lin, col);
-    printf("%d %d\n", pos_ini.x, pos_ini.y);
-    solve(&visited, matrix, lin, col, keys);
+    //printf("%d %d\n", pos_ini.x, pos_ini.y);
+    //solve(&visited, matrix, lin, col, keys);
+
+    //Required Analise Mode and Normal Mode
+    #ifdef ANALISE
+        printf ("Analise mode\n");
+        solve(&visited, matrix, lin, col, keys, 1);
+    #else
+        printf("Normal Mode\n");
+        solve(&visited, matrix, lin, col, keys, 0);
+    #endif
 
     return 0;
 }
