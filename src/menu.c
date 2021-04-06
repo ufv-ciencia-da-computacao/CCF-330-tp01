@@ -41,7 +41,7 @@ void execute() {
     printf("Nome do arquivo (sem extensao): ");
     scanf(" %[^\n]s", name);
 
-    read_file(&matrix, &lin, &col, &keys, name);
+    if(read_file(&matrix, &lin, &col, &keys, name)==0) return;
 
     visited = (int**) malloc(lin*sizeof(int*));
     for (int i = 0; i < lin; i++) visited[i] = (int*) malloc (col*sizeof(int)); 

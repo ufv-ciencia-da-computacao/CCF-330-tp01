@@ -1,7 +1,7 @@
 #include <string.h>
 #include "leitura.h"
 
-void read_file(int ***matrix, int *lin, int *col, int *keys, char *name) {
+int read_file(int ***matrix, int *lin, int *col, int *keys, char *name) {
     FILE *file;
     char path[100];
     strcat(path, "./data/");
@@ -11,8 +11,9 @@ void read_file(int ***matrix, int *lin, int *col, int *keys, char *name) {
     file = fopen(path, "r");
 
     if (file == NULL) {
-        perror("Arquivo nao pode ser lido!");
+        perror("\nArquivo nao pode ser lido!");
         fclose(file);
+        return 0;
     }
 
     while (!feof(file)) {
@@ -32,4 +33,5 @@ void read_file(int ***matrix, int *lin, int *col, int *keys, char *name) {
     }
 
     fclose(file);
+    return 1;
 }
