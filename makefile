@@ -1,24 +1,9 @@
-DEBUG ?= 1
-all: main clear
+ANALISE ?= 0
+all: main
 
-main: leitura.o solver.o menu.o main.o
-	gcc leitura.o solver.o menu.o main.o -o main
-
-leitura.o: ./src/leitura.c
-	gcc -c ./src/leitura.c -o leitura.o
-
-solver.o: ./src/solver.c
-	gcc -c ./src/solver.c -o solver.o
-
-menu.o: ./src/menu.c
-	gcc -c ./src/menu.c -o menu.o
-
-# -D ANALISE
-main.o: ./src/main.c
-ifeq ($(DEBUG),1)
-	gcc -D ANALISE -c ./src/main.c -o main.o
+main: ./src/leitura.c ./src/solver.c ./src/menu.c ./src/main.c
+ifeq ($(ANALISE),1)
+	gcc -D ANALISE ./src/leitura.c ./src/solver.c ./src/menu.c ./src/main.c -o main
 else
-	gcc -c ./src/main.c -o main.o
+	gcc ./src/leitura.c ./src/solver.c ./src/menu.c ./src/main.c -o main
 endif
-clear:
-	rm *.o

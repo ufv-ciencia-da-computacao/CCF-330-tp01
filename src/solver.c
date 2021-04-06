@@ -1,7 +1,7 @@
 #include "solver.h"
 
 int move_student_util(tuple_t pos, int ***visited, int **matrix, int keys, int max_lin, int max_col, int iter, int *fim, int *mov, int *recursive, int *maxLevel) {
-    int blocked=0;
+    int blocked=0, ret=-1;
     //Counting recursive calls
     (*recursive)++;
 
@@ -48,7 +48,9 @@ int move_student_util(tuple_t pos, int ***visited, int **matrix, int keys, int m
         tuple_t new_pos;
         new_pos.x = pos.x-1;
         new_pos.y = pos.y;
-        if(move_student_util(new_pos, visited, matrix, keys, max_lin, max_col, iter+1, fim, mov, recursive, maxLevel)==0) blocked++;
+        ret = move_student_util(new_pos, visited, matrix, keys, max_lin, max_col, iter+1, fim, mov, recursive, maxLevel);
+        if(ret==0) blocked++;
+        else if(ret==1) return 1;
     }
 
     //Left
@@ -56,7 +58,10 @@ int move_student_util(tuple_t pos, int ***visited, int **matrix, int keys, int m
         tuple_t new_pos;
         new_pos.x = pos.x;
         new_pos.y = pos.y-1;
-        if(move_student_util(new_pos, visited, matrix, keys, max_lin, max_col, iter+1, fim, mov, recursive, maxLevel)==0) blocked++;
+        ret = -1;
+        ret = move_student_util(new_pos, visited, matrix, keys, max_lin, max_col, iter+1, fim, mov, recursive, maxLevel);
+        if(ret==0) blocked++;
+        else if(ret==1) return 1;
     }
 
     //Right
@@ -64,7 +69,10 @@ int move_student_util(tuple_t pos, int ***visited, int **matrix, int keys, int m
         tuple_t new_pos;
         new_pos.x = pos.x;
         new_pos.y = pos.y+1;
-        if(move_student_util(new_pos, visited, matrix, keys, max_lin, max_col, iter+1, fim, mov, recursive, maxLevel)==0) blocked++;
+        ret = -1;
+        ret = move_student_util(new_pos, visited, matrix, keys, max_lin, max_col, iter+1, fim, mov, recursive, maxLevel);
+        if(ret==0) blocked++;
+        else if(ret==1) return 1;
     }
 
     //Down
@@ -72,7 +80,10 @@ int move_student_util(tuple_t pos, int ***visited, int **matrix, int keys, int m
         tuple_t new_pos;
         new_pos.x = pos.x+1;
         new_pos.y = pos.y;
-        if(move_student_util(new_pos, visited, matrix, keys, max_lin, max_col, iter+1, fim, mov, recursive, maxLevel)==0) blocked++;
+        ret = -1;
+        ret = move_student_util(new_pos, visited, matrix, keys, max_lin, max_col, iter+1, fim, mov, recursive, maxLevel);
+        if(ret==0) blocked++;
+        else if(ret==1) return 1;
     }
     
     //Returning, so setting visited back to zero
@@ -80,6 +91,20 @@ int move_student_util(tuple_t pos, int ***visited, int **matrix, int keys, int m
 
     if(blocked==4) (*mov)++;
 
+}
+
+tuple_t find_initial_position(int **matrix, int lin, int col) {
+    tuple_t initial_position;
+    for (int i = lin-1; i >= 0; i--) {
+        for (int j = 0; j < col; j++) {
+            if (matrix[i][j] == 0) {
+                initial_position.x = i;
+                initial_position.y = j;
+                break;
+            }
+        }
+    }
+    return initial_position;
 }
 
 void solve(int ***visited, int **matrix, int lin, int col, int keys, int analise) {
@@ -116,18 +141,4 @@ void solve(int ***visited, int **matrix, int lin, int col, int keys, int analise
     }
     
     
-}
-
-tuple_t find_initial_position(int **matrix, int lin, int col) {
-    tuple_t initial_position;
-    for (int i = lin-1; i >= 0; i--) {
-        for (int j = 0; j < col; j++) {
-            if (matrix[i][j] == 0) {
-                initial_position.x = i;
-                initial_position.y = j;
-                break;
-            }
-        }
-    }
-    return initial_position;
 }

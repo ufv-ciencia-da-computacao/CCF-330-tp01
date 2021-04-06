@@ -4,6 +4,12 @@
 
 void menu() {
     int op = -1;
+
+    #ifdef ANALISE
+        printf ("\nAnalise mode");
+    #else
+        printf("\nNormal Mode");
+    #endif
     
     while(op != 0) {
         printf("\n\nMenu Escapar do Labiritinto\n");
@@ -46,14 +52,10 @@ void execute() {
         }
     }
 
-    tuple_t pos_ini = find_initial_position(matrix, lin, col);
-
     //Required Analise Mode and Normal Mode
     #ifdef ANALISE
-        printf ("\nAnalise mode\n");
         solve(&visited, matrix, lin, col, keys, 1);
     #else
-        printf("\nNormal Mode\n");
         solve(&visited, matrix, lin, col, keys, 0);
     #endif
 }
