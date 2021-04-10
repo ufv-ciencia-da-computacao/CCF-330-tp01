@@ -4,10 +4,10 @@
 int read_file(int ***matrix, int *lin, int *col, int *keys, char *name) {
     FILE *file;
     char path[100];
-    strcat(path, "./data/");
+    strcpy(path, "./data/");
     strcat(path, name);
     strcat(path, ".txt");
-    
+
     file = fopen(path, "r");
 
     if (file == NULL) {
